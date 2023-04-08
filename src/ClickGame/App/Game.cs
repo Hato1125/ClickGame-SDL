@@ -1,6 +1,7 @@
 using System.Drawing;
 using SDL2;
 using SDLib;
+using SDLib.Input;
 using ClickGame.Core;
 using ClickGame.Scene.Test;
 
@@ -38,6 +39,9 @@ internal class Game : App
     
     void Loop(IReadOnlyAppInfo info)
     {
+        Keyboard.Update();
+        Mouse.Update();
+
         SceneManager.SceneView(info);
     }
 
