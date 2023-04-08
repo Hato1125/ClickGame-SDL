@@ -1,0 +1,13 @@
+.vs/
+src/ClickGame/obj/
+*.exe
+*.dll
+*.pdb
+*.json
+!SDL2.dll
+!SDL2_gfx.dll
+!SDL2_image.dll
+!SDL2_mixer.dll
+!SDL2_ttf.dll
+!SDLib.dll
+!libpng16-16.dll
