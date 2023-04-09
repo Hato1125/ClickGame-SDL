@@ -27,6 +27,8 @@ internal class Game : App
             windowMaxSize
         )
     {
+        SDL.SDL_SetHint(SDL.SDL_HINT_RENDER_SCALE_QUALITY, "1");
+
         OnInitialize += Init;
         OnMainLoop += Loop;
         OnFinish += Finish;

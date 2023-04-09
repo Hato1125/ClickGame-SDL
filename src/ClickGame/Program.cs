@@ -13,7 +13,5 @@ internal class Program
 
     [STAThread]
     private static void Main()
-    {
-        Game.Run();
-    }
+        => Game.Run();
 }
