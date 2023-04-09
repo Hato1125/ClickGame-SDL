@@ -4,6 +4,7 @@ using SDLib;
 using SDLib.Input;
 using ClickGame.Core;
 using ClickGame.Scene.Test;
+using ClickGame.Scene.Title;
 
 namespace ClickGame;
 
@@ -37,12 +38,19 @@ internal class Game : App
     void Init(IReadOnlyAppInfo info)
     {
         SceneManager.RegistScene("Test", new Test(info));
+        SceneManager.RegistScene("Title", new Title(info));
+
+        SceneManager.SetScene("Title");
     }
-    
+
     void Loop(IReadOnlyAppInfo info)
     {
         Keyboard.Update();
         Mouse.Update();
+
+        if (Keyboard.IsPushing(SDL.SDL_Scancode.SDL_SCANCODE_F1)
+            && Keyboard.IsPushing(SDL.SDL_Scancode.SDL_SCANCODE_T))
+            SceneManager.SetScene("Test");
 
         SceneManager.SceneView(info);
     }

@@ -2,7 +2,7 @@ using ClickGame.Core;
 using ClickGame.Gui;
 using SDL2;
 using SDLib;
-using SDLib.Graphics;
+using SDLib.Input;
 using SDLib.Resource;
 
 namespace ClickGame.Scene.Test;
@@ -10,7 +10,6 @@ namespace ClickGame.Scene.Test;
 internal class Test : SceneBase
 {
     private ImagePanel parentElement;
-    private UIElement childElement;
 
     public static readonly TextureManager TextureManager = new();
 
@@ -23,32 +22,6 @@ internal class Test : SceneBase
         parentElement.X = 100;
         parentElement.Y = 100;
 
-        /*
-        parentElement = new(info, 200, 200);
-        parentElement.X = 300;
-        parentElement.Y = 300;
-        parentElement.OnPaint += () =>
-        {
-            SDL.SDL_GetRenderDrawColor(info.RenderPtr, out byte r, out byte g, out byte b, out byte a);
-            SDL.SDL_SetRenderDrawColor(info.RenderPtr, 255, 0, 0, 255);
-            SDL.SDL_RenderFillRect(info.RenderPtr, ref rectangle);
-            SDL.SDL_SetRenderDrawColor(info.RenderPtr, r, g, b, a);
-        };
-
-        childElement = new(info, 100, 100);
-        childElement.X = 10;
-        childElement.Y = 10;
-        childElement.OnPaint += () =>
-        {
-            SDL.SDL_GetRenderDrawColor(info.RenderPtr, out byte r, out byte g, out byte b, out byte a);
-            SDL.SDL_SetRenderDrawColor(info.RenderPtr, 0, 0, 255, 255);
-            SDL.SDL_RenderFillRect(info.RenderPtr, ref rectangle);
-            SDL.SDL_SetRenderDrawColor(info.RenderPtr, r, g, b, a);
-        };
-
-        parentElement.Children.Add(childElement);
-        */
-
         Children.Add(new Player(info));
     }
 
@@ -59,6 +32,10 @@ internal class Test : SceneBase
 
     public override void Update(IReadOnlyAppInfo info)
     {
+        if (Keyboard.IsPushing(SDL.SDL_Scancode.SDL_SCANCODE_F1)
+            && Keyboard.IsPushing(SDL.SDL_Scancode.SDL_SCANCODE_B))
+            SceneManager.SetScene("Title");
+
         parentElement.Update();
 
         base.Update(info);
@@ -73,8 +50,6 @@ internal class Test : SceneBase
 
     public override void Finish()
     {
-        TextureManager.DeleteAllTexture();
-
         base.Finish();
     }
 }
