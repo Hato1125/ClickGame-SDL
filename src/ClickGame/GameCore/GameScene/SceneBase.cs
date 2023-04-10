@@ -5,6 +5,11 @@ namespace ClickGame.Core;
 internal class SceneBase
 {
     /// <summary>
+    /// 追加が延期されたActorのリスト
+    /// </summary>
+    public readonly List<Actor> PendingActor = new();
+
+    /// <summary>
     /// Sceneの子要素リスト
     /// </summary>
     public readonly List<SceneBase> Children = new();
@@ -41,7 +46,7 @@ internal class SceneBase
     public virtual void Update(IReadOnlyAppInfo info)
     {
         foreach (var actor in Actors)
-            actor.UpdateActor();
+            actor.Update();
 
         foreach (var child in Children)
             child.Update(info);
@@ -53,7 +58,7 @@ internal class SceneBase
     /// <param name="info">アプリケーションの情報</param>
     public virtual void Render(IReadOnlyAppInfo info)
     {
-        foreach(var render in Renders)
+        foreach (var render in Renders)
             render.RednerComponent();
 
         foreach (var child in Children)
@@ -67,5 +72,38 @@ internal class SceneBase
     {
         foreach (var child in Children)
             child.Finish();
+    }
+
+    /// <summary>
+    /// Actorを追加する
+    /// </summary>
+    /// <param name="actor">Actor</param>
+    public void AddActor(Actor actor)
+    {
+        if (actor.State != Actor.ActorState.Active)
+            return;
+
+        // シーンがアップデート中なら追加を延期する
+        if (SceneManager.IsUpdating)
+            PendingActor.Add(actor);
+        else
+            Actors.Add(actor);
+
+        Console.WriteLine("[ SYSTEM::ACTOR ] Add Actor.");
+    }
+
+    /// <summary>
+    /// Actorを削除する
+    /// </summary>
+    /// <param name="actor">Actor</param>
+    public void RemoveActor(Actor actor)
+    {
+        // 指定されたActorが存在するかを確認する
+        if (!Actors.Contains(actor))
+            return;
+
+        Actors.Remove(actor);
+
+        Console.WriteLine("[ SYSTEM::ACTOR ] Remove Actor.");
     }
 }

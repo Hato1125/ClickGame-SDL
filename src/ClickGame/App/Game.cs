@@ -30,6 +30,7 @@ internal class Game : App
     {
         SDL.SDL_SetHint(SDL.SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
+        MaxFramerate = 60;
         OnInitialize += Init;
         OnMainLoop += Loop;
         OnFinish += Finish;
@@ -37,8 +38,8 @@ internal class Game : App
 
     void Init(IReadOnlyAppInfo info)
     {
-        SceneManager.RegistScene("Test", new Test(info));
-        SceneManager.RegistScene("Title", new Title(info));
+        SceneManager.RegistScene("Test", new Test(info), false);
+        SceneManager.RegistScene("Title", new Title(info), false);
 
         SceneManager.SetScene("Title");
     }
