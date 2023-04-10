@@ -10,7 +10,7 @@ internal class Title : SceneBase
 
     public Title(IReadOnlyAppInfo info)
     {
-        Children.Add(new Menu(info));
+        new MenuActor(this, info);
     }
 
     public override void Init(IReadOnlyAppInfo info)
