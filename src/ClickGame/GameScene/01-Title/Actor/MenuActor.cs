@@ -25,7 +25,7 @@ internal class MenuActor : Actor
             var gui = tempComponent.GuiParts;
             if (gui != null)
             {
-                gui.X = (int)PixelHelper.GetCenter(GameInfo.FirstWindowWidth,gui.Width);
+                gui.X = (int)PixelHelper.GetCenter(GameInfo.FirstWindowWidth, gui.Width);
                 gui.Y = (int)PixelHelper.GetPercent(GameInfo.FirstWindowHeight, 50) + (gui.Height + 10) * i;
 
                 gui.OnSeparate += () =>
@@ -36,15 +36,29 @@ internal class MenuActor : Actor
         }
     }
 
-    void SetGuiInput(bool isInput)
+    public override void RemoveCall()
     {
-        foreach(var component in Components)
+        foreach (var component in Components)
         {
-            if(component is MenuComponent)
+            if (component is MenuComponent)
             {
                 var menu = (MenuComponent)component;
 
-                if(menu.GuiParts != null)
+                menu.GuiParts?.Dispose();
+            }
+        }
+        base.RemoveCall();
+    }
+
+    void SetGuiInput(bool isInput)
+    {
+        foreach (var component in Components)
+        {
+            if (component is MenuComponent)
+            {
+                var menu = (MenuComponent)component;
+
+                if (menu.GuiParts != null)
                     menu.GuiParts.IsInput = isInput;
             }
         }

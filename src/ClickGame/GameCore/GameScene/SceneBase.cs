@@ -70,6 +70,26 @@ internal class SceneBase
     /// </summary>
     public virtual void Finish()
     {
+        Console.WriteLine("[ SYSTEM:ACTOR ] Clear all Actor.");
+
+        Console.WriteLine("[ SYSTEM:ACTOR::COMPONENT ] Clear all Component.");
+        foreach (var actor in PendingActor)
+        {
+            actor.RemoveCall();
+            actor.Components.Clear();
+        }
+
+        Console.WriteLine("[ SYSTEM:ACTOR::COMPONENT ] Clear all Component.");
+        foreach (var actor in Actors)
+        {
+            // 仕様上RemoveActorが呼べないので手動でRemoveCallを呼ぶ
+            actor.RemoveCall();
+            actor.Components.Clear();
+        }
+
+        PendingActor.Clear();
+        Actors.Clear();
+
         foreach (var child in Children)
             child.Finish();
     }
@@ -102,6 +122,7 @@ internal class SceneBase
         if (!Actors.Contains(actor))
             return;
 
+        actor.RemoveCall();
         Actors.Remove(actor);
 
         Console.WriteLine("[ SYSTEM::ACTOR ] Remove Actor.");

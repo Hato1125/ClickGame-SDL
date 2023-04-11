@@ -45,6 +45,10 @@ internal class Actor
             component.UpdateComponent();
     }
 
+    public virtual void RemoveCall()
+    {
+    }
+
     /// <summary>
     /// Actorの状態の列挙型
     /// </summary>

@@ -8,13 +8,19 @@ internal class Title : SceneBase
 {
     public static readonly TextureManager TextureManager = new();
 
+    private MenuActor? _menuActor;
+
     public Title(IReadOnlyAppInfo info)
     {
-        new MenuActor(this, info);
+        _menuActor = new(this, info);
     }
 
     public override void Init(IReadOnlyAppInfo info)
     {
+        if(_menuActor == null){
+            _menuActor = new(this, info);
+        }
+
         base.Init(info);
     }
 
@@ -30,6 +36,9 @@ internal class Title : SceneBase
 
     public override void Finish()
     {
+        if(_menuActor != null)
+            _menuActor = null;
+
         base.Finish();
     }
 }

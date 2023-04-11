@@ -18,6 +18,11 @@ internal static class SceneManager
     public static bool IsUpdating { get; private set; }
 
     /// <summary>
+    /// 現在のシーンのActorの数
+    /// </summary>
+    public static int NowSceneActorNum { get; private set; }
+
+    /// <summary>
     /// シーンを登録する
     /// </summary>
     /// <param name="sceneName">シーンの名前</param>
@@ -39,7 +44,7 @@ internal static class SceneManager
     {
         if (_sceneInstance != null)
         {
-            Console.WriteLine($"[ SYSTEM::SCENE ] Finish {sceneName} Scene.");
+            Console.WriteLine($"[ SYSTEM::SCENE ] Finish {NowSceneName} Scene.");
             _sceneInstance.Finish();
             _sceneInstance.IsInit = true;
         }
@@ -90,6 +95,7 @@ internal static class SceneManager
         if (_sceneInstance == null)
             return;
 
+        NowSceneActorNum = _sceneInstance.Actors.Count;
         if (_sceneInstance.IsInit)
         {
             Console.WriteLine($"[ SYSTEM::SCENE ] Init {NowSceneName} Scene.");

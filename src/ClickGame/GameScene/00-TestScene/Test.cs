@@ -33,7 +33,7 @@ internal class Test : SceneBase
     public override void Update(IReadOnlyAppInfo info)
     {
         if (Keyboard.IsPushing(SDL.SDL_Scancode.SDL_SCANCODE_F1)
-            && Keyboard.IsPushing(SDL.SDL_Scancode.SDL_SCANCODE_B))
+            && Keyboard.IsPushed(SDL.SDL_Scancode.SDL_SCANCODE_B))
             SceneManager.SetScene("Title");
 
         parentElement.Update();
