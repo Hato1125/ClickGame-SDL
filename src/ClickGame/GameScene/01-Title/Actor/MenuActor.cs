@@ -1,66 +1,68 @@
 using SDLib;
 using SDLib.Graphics;
-using ClickGame.Core;
+using SDLib.Framework;
 using ClickGame.Helper;
 
-namespace ClickGame.Scene.Title;
+namespace ClickGame.Scenes.Title;
 
 internal class MenuActor : Actor
 {
-    public MenuActor(SceneBase scene, IReadOnlyAppInfo info)
-        : base(scene)
+    public MenuActor(IReadOnlyAppInfo info, Scene owner)
+        : base(owner)
     {
-        var textures = new Texture2D[]
+        if (TL.StartButton == null
+            || TL.SettingButton == null
+            || TL.ExitButton == null)
+            return;
+
+        var buttonTextures = new Texture2D[]
         {
-            Title.TextureManager.LoadTexture(info.RenderPtr, $"{GameInfo.GraphicsAsset}01-Title\\StartButton.png"),
-            Title.TextureManager.LoadTexture(info.RenderPtr, $"{GameInfo.GraphicsAsset}01-Title\\SettingButton.png"),
-            Title.TextureManager.LoadTexture(info.RenderPtr, $"{GameInfo.GraphicsAsset}01-Title\\ExitButton.png"),
+            TL.StartButton,
+            TL.SettingButton,
+            TL.ExitButton
         };
 
-        MenuComponent? tempComponent = null;
-        for (int i = 0; i < textures.Length; i++)
+        MenuComponent? tmpComponent;
+        for (int i = 0; i < buttonTextures.Length; i++)
         {
-            tempComponent = new MenuComponent(this, info, textures[i]);
+            tmpComponent = new(this);
+            tmpComponent.Gui = new(info, buttonTextures[i]);
+            tmpComponent.Gui.X = (int)PixelHelper.GetCenter(1280, tmpComponent.Gui.Width);
+            tmpComponent.Gui.Y = (int)PixelHelper.GetPercent(720, 50) + (tmpComponent.Gui.Height - 20) * i;
+        }
+        tmpComponent = null;
+    }
 
-            var gui = tempComponent.GuiParts;
-            if (gui != null)
-            {
-                gui.X = (int)PixelHelper.GetCenter(GameInfo.FirstWindowWidth, gui.Width);
-                gui.Y = (int)PixelHelper.GetPercent(GameInfo.FirstWindowHeight, 50) + (gui.Height + 10) * i;
+    protected override void ActorUpdate()
+    {
+        base.ActorUpdate();
 
-                gui.OnSeparate += () =>
-                {
+        foreach (var component in ComponentList)
+        {
+            if (!(component is MenuComponent))
+                continue;
+
+            var guiCompo = (MenuComponent)component;
+
+            // guiが押されたらユーザの入力を受け付けないようにする
+            if (guiCompo.Gui != null)
+                if (guiCompo.Gui.IsSeparate())
                     SetGuiInput(false);
-                };
-            }
+
         }
     }
 
-    public override void RemoveCall()
+    private void SetGuiInput(bool isInput)
     {
-        foreach (var component in Components)
+        foreach (var component in ComponentList)
         {
-            if (component is MenuComponent)
-            {
-                var menu = (MenuComponent)component;
+            if (!(component is MenuComponent))
+                continue;
 
-                menu.GuiParts?.Dispose();
-            }
-        }
-        base.RemoveCall();
-    }
+            var guiCompo = (MenuComponent)component;
 
-    void SetGuiInput(bool isInput)
-    {
-        foreach (var component in Components)
-        {
-            if (component is MenuComponent)
-            {
-                var menu = (MenuComponent)component;
-
-                if (menu.GuiParts != null)
-                    menu.GuiParts.IsInput = isInput;
-            }
+            if (guiCompo.Gui != null)
+                guiCompo.Gui.IsInput = isInput;
         }
     }
 }

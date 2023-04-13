@@ -1,15 +1,35 @@
-using SDLib;
-using SDLib.Graphics;
-using ClickGame.Core;
+using SDLib.Framework;
 using ClickGame.Gui;
 
-namespace ClickGame.Scene.Title;
+namespace ClickGame.Scenes.Title;
 
-internal class MenuComponent : GuiComponent
+internal class MenuComponent : Component
 {
-    public MenuComponent(Actor owner, IReadOnlyAppInfo info, Texture2D image)
+    public ImagePanel? Gui { get; set; }
+
+    public MenuComponent(Actor owner)
         : base(owner)
     {
-        GuiParts = new ImagePanel(info, image);
+    }
+
+    protected override void ComponentUpdate()
+    {
+        Gui?.Update();
+
+        base.ComponentUpdate();
+    }
+
+    protected override void ComponentRender()
+    {
+        Gui?.Render();
+
+        base.ComponentRender();
+    }
+
+    protected override void ComponentDispose(bool isDisposeing)
+    {
+        base.ComponentDispose(isDisposeing);
+
+        Gui?.Dispose();
     }
 }

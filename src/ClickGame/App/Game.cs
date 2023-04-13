@@ -3,9 +3,8 @@ using SDL2;
 using SDLib;
 using SDLib.Input;
 using SDLib.Graphics;
-using ClickGame.Core;
-using ClickGame.Scene.Test;
-using ClickGame.Scene.Title;
+using SDLib.Framework;
+using ClickGame.Scenes.Title;
 
 namespace ClickGame;
 
@@ -41,15 +40,10 @@ internal class Game : App
 
     void Init(IReadOnlyAppInfo info)
     {
-        Console.WriteLine($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf");
-        Console.WriteLine(@"C:\Users\hatof\Desktop\ClickGame\build\Debug\net7.0\Assets\Fonts\07やさしさゴシックボールド.ttf");
-        var font = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 30, Color.White);
+        var font = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 20, Color.White);
         ActorNumberFont = new(info.RenderPtr, font);
 
-        SceneManager.RegistScene("Test", new Test(info), false);
-        SceneManager.RegistScene("Title", new Title(info), false);
-
-        SceneManager.SetScene("Title");
+        SceneManager.RegistScene("Title", new Title());
     }
 
     void Loop(IReadOnlyAppInfo info)
@@ -57,15 +51,10 @@ internal class Game : App
         Keyboard.Update();
         Mouse.Update();
 
-        if (Keyboard.IsPushing(SDL.SDL_Scancode.SDL_SCANCODE_F1)
-            && Keyboard.IsPushed(SDL.SDL_Scancode.SDL_SCANCODE_T))
-            SceneManager.SetScene("Test");
-
-        SceneManager.SceneView(info);
-
+        SceneManager.ViewScene(info);
         if (ActorNumberFont != null)
         {
-            ActorNumberFont.Text = SceneManager.NowSceneActorNum.ToString();
+            ActorNumberFont.Text = $"ActorNumber: {SceneManager.SceneActorNumber.ToString()}";
             ActorNumberFont.Render().Render(0, 0);
         }
     }

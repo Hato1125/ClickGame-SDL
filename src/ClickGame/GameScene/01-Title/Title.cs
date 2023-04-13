@@ -1,25 +1,27 @@
-using ClickGame.Core;
+using System.Numerics;
 using SDLib;
+using SDLib.Framework;
 using SDLib.Resource;
+using ClickGame.Helper;
 
-namespace ClickGame.Scene.Title;
+namespace ClickGame.Scenes.Title;
 
-internal class Title : SceneBase
+internal class Title : Scene
 {
     public static readonly TextureManager TextureManager = new();
 
-    private MenuActor? _menuActor;
-
-    public Title(IReadOnlyAppInfo info)
-    {
-        _menuActor = new(this, info);
-    }
-
     public override void Init(IReadOnlyAppInfo info)
     {
-        if(_menuActor == null){
-            _menuActor = new(this, info);
-        }
+        TL.Load(info);
+
+        var logoPosition = new Vector2(
+            PixelHelper.GetCenter(1280, TL.Logo != null ? TL.Logo.Width : 0),
+            PixelHelper.GetPercent(720, 3)
+        );
+
+        new TextureActor(TL.Background, Vector2.Zero, this);
+        new TextureActor(TL.Logo, logoPosition, this);
+        new MenuActor(info, this);
 
         base.Init(info);
     }
@@ -36,8 +38,7 @@ internal class Title : SceneBase
 
     public override void Finish()
     {
-        if(_menuActor != null)
-            _menuActor = null;
+        TextureManager.DeleteAllTexture();
 
         base.Finish();
     }
