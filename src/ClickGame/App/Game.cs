@@ -4,7 +4,6 @@ using SDLib;
 using SDLib.Input;
 using SDLib.Graphics;
 using SDLib.Framework;
-using ClickGame.Scenes.Title;
 
 namespace ClickGame;
 
@@ -43,7 +42,10 @@ internal class Game : App
         var font = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 20, Color.White);
         ActorNumberFont = new(info.RenderPtr, font);
 
-        SceneManager.RegistScene("Title", new Title());
+        SceneManager.RegistScene("Title", new ClickGame.Scenes.Title.Title(), false);
+        SceneManager.RegistScene("Game", new ClickGame.Scenes.Game.Game(), false);
+
+        SceneManager.SetScene("Title");
     }
 
     void Loop(IReadOnlyAppInfo info)

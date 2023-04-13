@@ -28,7 +28,7 @@ internal class MenuActor : Actor
             tmpComponent = new(this);
             tmpComponent.Gui = new(info, buttonTextures[i]);
             tmpComponent.Gui.X = (int)PixelHelper.GetCenter(1280, tmpComponent.Gui.Width);
-            tmpComponent.Gui.Y = (int)PixelHelper.GetPercent(720, 50) + (tmpComponent.Gui.Height - 20) * i;
+            tmpComponent.Gui.Y = (int)PixelHelper.GetPercent(720, 50) + tmpComponent.Gui.Height * i;
         }
         tmpComponent = null;
     }
