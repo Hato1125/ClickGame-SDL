@@ -56,7 +56,8 @@ internal class Game : App
         SceneManager.ViewScene(info);
         if (ActorNumberFont != null)
         {
-            ActorNumberFont.Text = $"ActorNumber: {SceneManager.SceneActorNumber.ToString()}";
+            string actorNumMessage = $"[{SceneManager.SceneName}] NowActorNum: {SceneManager.SceneActorNumber.ToString()}";
+            ActorNumberFont.Text = actorNumMessage;
             ActorNumberFont.Render().Render(0, 0);
         }
     }

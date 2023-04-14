@@ -2,18 +2,15 @@ using SDLib;
 using SDLib.Graphics;
 using SDLib.Framework;
 using ClickGame.Helper;
+using ClickGame.Common;
 
 namespace ClickGame.Scenes.Title;
 
-internal class MenuActor : Actor
+internal class MenuActor : AppInfoActor
 {
-    private IReadOnlyAppInfo _info;
-
-    public MenuActor(IReadOnlyAppInfo info, Scene owner)
-        : base(owner)
+    public MenuActor(Scene owner, IReadOnlyAppInfo info)
+        : base(owner, info)
     {
-        _info = info;
-
         if (TL.StartButton == null
             || TL.SettingButton == null
             || TL.ExitButton == null)
@@ -57,10 +54,11 @@ internal class MenuActor : Actor
                 SetGuiInput(false);
 
                 // フェードアウト用のActorを追加
-                new FadeOutActor(_info, Owner, () =>
+                var fadeOut = new FadeOutActor(Owner, AppInfo);
+                fadeOut.OnFinish += () =>
                 {
                     SceneManager.SetScene("Game");
-                });
+                };
             }
 
         }

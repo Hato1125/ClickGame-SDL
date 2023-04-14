@@ -3,8 +3,7 @@ using SDLib;
 using SDLib.Framework;
 using SDLib.Resource;
 using ClickGame.Helper;
-using SDLib.Graphics;
-using System.Drawing;
+using ClickGame.Common;
 
 namespace ClickGame.Scenes.Title;
 
@@ -21,9 +20,9 @@ internal class Title : Scene
             PixelHelper.GetPercent(720, 3)
         );
 
-        new TextureActor(TL.Background, Vector2.Zero, this);
-        new TextureActor(TL.Logo, logoPosition, this);
-        new MenuActor(info, this);
+        new TextureActor(this, info, TL.Background);
+        new TextureActor(this, info, TL.Logo, logoPosition);
+        new MenuActor(this, info);
 
         base.Init(info);
     }
