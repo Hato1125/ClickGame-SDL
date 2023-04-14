@@ -3,6 +3,8 @@ using SDLib;
 using SDLib.Framework;
 using SDLib.Resource;
 using ClickGame.Helper;
+using SDLib.Graphics;
+using System.Drawing;
 
 namespace ClickGame.Scenes.Title;
 

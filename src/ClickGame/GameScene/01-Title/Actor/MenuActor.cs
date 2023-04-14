@@ -7,9 +7,13 @@ namespace ClickGame.Scenes.Title;
 
 internal class MenuActor : Actor
 {
+    private IReadOnlyAppInfo _info;
+
     public MenuActor(IReadOnlyAppInfo info, Scene owner)
         : base(owner)
     {
+        _info = info;
+
         if (TL.StartButton == null
             || TL.SettingButton == null
             || TL.ExitButton == null)
@@ -44,10 +48,20 @@ internal class MenuActor : Actor
 
             var guiCompo = (MenuComponent)component;
 
+            if (guiCompo.Gui == null)
+                continue;
+
             // guiが押されたらユーザの入力を受け付けないようにする
-            if (guiCompo.Gui != null)
-                if (guiCompo.Gui.IsSeparate())
-                    SetGuiInput(false);
+            if (guiCompo.Gui.IsSeparate())
+            {
+                SetGuiInput(false);
+
+                // フェードアウト用のActorを追加
+                new FadeOutActor(_info, Owner, () =>
+                {
+                    SceneManager.SetScene("Game");
+                });
+            }
 
         }
     }
