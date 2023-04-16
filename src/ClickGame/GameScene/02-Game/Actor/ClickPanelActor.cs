@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using SDLib;
 using SDLib.Framework;
 using ClickGame.Common;
@@ -8,6 +9,8 @@ namespace ClickGame.Scenes.Game;
 
 internal class ClickPanelActor : AppInfoActor
 {
+    private readonly Stopwatch _cpsStopwatch = new();
+
     public ClickPanelActor(Scene owner, IReadOnlyAppInfo info)
         : base(owner, info)
     {
@@ -28,6 +31,21 @@ internal class ClickPanelActor : AppInfoActor
 
     protected override void ActorUpdate()
     {
+        if(GameData.GameClickCPS > 0)
+        {
+            if(!_cpsStopwatch.IsRunning)
+                _cpsStopwatch.Start();
+            
+            // 指定時間に+1づつやってもいいがFPSの都合上どうしても速さに上限があるため
+            // 一秒間隔でCPSを足していく
+            if(_cpsStopwatch.Elapsed.TotalSeconds >= 1)
+            {
+                GameData.GameClickNum += (long)(GameData.GameClickCPS);
+                _cpsStopwatch.Stop();
+                _cpsStopwatch.Reset();
+            }
+        }
+
         base.ActorUpdate();
     }
 }
