@@ -5,15 +5,15 @@ using SDLib.Framework;
 
 namespace ClickGame.Common;
 
-internal class FadeOutActor : AppInfoActor
+internal class FadeInActor : AppInfoActor
 {
-    private double _fadeOutCounter;
-    private double _fadeOutValue;
+    private double _fadeInCounter;
+    private double _fadeInValue;
 
     public double FadeMs { get; set; }
     public event Action? OnFinish = delegate { };
 
-    public FadeOutActor(Scene owner, IReadOnlyAppInfo info, double fadeMs = 2.5)
+    public FadeInActor(Scene owner, IReadOnlyAppInfo info, double fadeMs = 2.5)
         : base(owner, info)
     {
         FadeMs = fadeMs;
@@ -27,22 +27,22 @@ internal class FadeOutActor : AppInfoActor
 
     protected override void ActorUpdate()
     {
-        // フェードアウトが終わった次のフレームに実行
-        if (_fadeOutValue >= 255)
+        // フェードインが終わった次のフレームに実行
+        if (_fadeInValue >= 255)
         {
-            State = ActorState.Dead;
+            State = Actor.ActorState.Dead;
             OnFinish?.Invoke();
         }
 
-        if (_fadeOutCounter < 90)
-            _fadeOutCounter += (90 / FadeMs) * AppInfo.DeltaTime.TotalSeconds;
+        if (_fadeInCounter < 90)
+            _fadeInCounter += (90 / FadeMs) * AppInfo.DeltaTime.TotalSeconds;
         else
-            _fadeOutCounter = 90;
+            _fadeInCounter = 90;
 
-        if (_fadeOutValue < 255)
-            _fadeOutValue = Math.Sin(_fadeOutCounter * Math.PI / 180) * 255;
+        if (_fadeInValue < 255)
+            _fadeInValue = Math.Sin(_fadeInCounter * Math.PI / 180) * 255;
         else
-            _fadeOutCounter = 255;
+            _fadeInValue = 255;
 
         foreach (var component in ComponentList)
         {
@@ -50,7 +50,7 @@ internal class FadeOutActor : AppInfoActor
                 continue;
 
             var rectComponent = (RectangleComponent)component;
-            rectComponent.Opacity = (byte)_fadeOutValue;
+            rectComponent.Opacity = (byte)_fadeInValue;
         }
 
         base.ActorUpdate();

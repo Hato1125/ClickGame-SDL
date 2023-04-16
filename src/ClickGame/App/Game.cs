@@ -9,7 +9,7 @@ namespace ClickGame;
 
 internal class Game : App
 {
-    private FontRenderer? ActorNumberFont;
+    private readonly GameDebug _debug = new();
 
     public Game(
         string windowTitle,
@@ -29,7 +29,7 @@ internal class Game : App
             windowMaxSize
         )
     {
-        SDL.SDL_SetHint(SDL.SDL_HINT_RENDER_SCALE_QUALITY, "1");
+        SDL.SDL_SetHint(SDL.SDL_HINT_RENDER_SCALE_QUALITY, "2");
 
         MaxFramerate = 60;
         OnInitialize += Init;
@@ -39,9 +39,9 @@ internal class Game : App
 
     void Init(IReadOnlyAppInfo info)
     {
-        var font = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 20, Color.White);
-        ActorNumberFont = new(info.RenderPtr, font);
+        _debug.Init(info);
 
+        SceneManager.RegistScene("Test", new ClickGame.Scenes.Test.Test(), false);
         SceneManager.RegistScene("Title", new ClickGame.Scenes.Title.Title(), false);
         SceneManager.RegistScene("Game", new ClickGame.Scenes.Game.Game(), false);
 
@@ -54,12 +54,8 @@ internal class Game : App
         Mouse.Update();
 
         SceneManager.ViewScene(info);
-        if (ActorNumberFont != null)
-        {
-            string actorNumMessage = $"[{SceneManager.SceneName}] NowActorNum: {SceneManager.SceneActorNumber.ToString()}";
-            ActorNumberFont.Text = actorNumMessage;
-            ActorNumberFont.Render().Render(0, 0);
-        }
+
+        _debug.Render();
     }
 
     void Finish(IReadOnlyAppInfo info)

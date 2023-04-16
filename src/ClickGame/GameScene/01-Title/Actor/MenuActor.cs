@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using SDLib;
 using SDLib.Graphics;
 using SDLib.Framework;
