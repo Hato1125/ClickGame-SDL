@@ -18,7 +18,7 @@ internal class ClickNumActor : AppInfoActor
         var family = new FontFamily(fontName, fontSize);
         var font = new NumberComponent(this, info, family);
 
-        font.FontRenderer.Text = GameData.GameClickNum.ToString();
+        font.FontRenderer.Text = ((long)GameData.GameClickNum).ToString();
         font.Position = new(
             PixelHelper.GetCenter(GameInfo.FirstWindowWidth, font.FontRenderer.GetTexture().Width),
             PixelHelper.GetPercent(GameInfo.FirstWindowHeight, 10)
@@ -34,20 +34,23 @@ internal class ClickNumActor : AppInfoActor
 
             var num = (NumberComponent)component;
 
-            if (num.FontRenderer.Text != GameData.GameClickNum.ToString())
+            // クリックされた回数が少数なのはおかしいからlongにキャスト
+            var clickNum = (long)GameData.GameClickNum;
+
+            if (num.FontRenderer.Text != clickNum.ToString())
             {
-                if (GameData.GameClickNum >= 1000000)
+                if (clickNum >= 1000000)
                     num.FontRenderer.FontFamily = new(fontName, fontSize, Color.Gold);
-                else if (GameData.GameClickNum >= 100000)
+                else if (clickNum >= 100000)
                     num.FontRenderer.FontFamily = new(fontName, fontSize, Color.Orange);
-                else if (GameData.GameClickNum >= 10000)
+                else if (clickNum >= 10000)
                     num.FontRenderer.FontFamily = new(fontName, fontSize, Color.Yellow);
-                else if (GameData.GameClickNum >= 1000)
+                else if (clickNum >= 1000)
                     num.FontRenderer.FontFamily = new(fontName, fontSize, Color.LightYellow);
                 else
                     num.FontRenderer.FontFamily = new(fontName, fontSize, Color.White);
 
-                num.FontRenderer.Text = GameData.GameClickNum.ToString();
+                num.FontRenderer.Text = clickNum.ToString();
             }
 
             num.Position = new(

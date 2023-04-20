@@ -9,10 +9,16 @@ internal static class TL
 
     public static Texture2D? Background;
     public static Texture2D? ClickPanel;
+    public static Texture2D? ItemPanel;
+    public static Texture2D? DummyIcon;
+    public static Texture2D? ClickerIcon;
 
     public static void Load(IReadOnlyAppInfo info)
     {
         Background = Game.TextureManager.LoadTexture(info.RenderPtr, $"{GameGraphics}Background.png");
         ClickPanel = Game.TextureManager.LoadTexture(info.RenderPtr, $"{GameGraphics}ClickPanel.png");
+        ItemPanel = Game.TextureManager.LoadTexture(info.RenderPtr, $"{GameGraphics}ItemPanel.png");
+        DummyIcon = Game.TextureManager.LoadTexture(info.RenderPtr, $"{GameGraphics}Icons\\DummyIcon.png");
+        ClickerIcon = Game.TextureManager.LoadTexture(info.RenderPtr, $"{GameGraphics}Icons\\ClickerIcon.png");
     }
 }

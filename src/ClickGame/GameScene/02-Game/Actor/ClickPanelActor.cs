@@ -31,16 +31,16 @@ internal class ClickPanelActor : AppInfoActor
 
     protected override void ActorUpdate()
     {
-        if(GameData.GameClickCPS > 0)
+        if(GameData.GameClickCPS > 0.0)
         {
             if(!_cpsStopwatch.IsRunning)
                 _cpsStopwatch.Start();
-            
+
             // 指定時間に+1づつやってもいいがFPSの都合上どうしても速さに上限があるため
             // 一秒間隔でCPSを足していく
             if(_cpsStopwatch.Elapsed.TotalSeconds >= 1)
             {
-                GameData.GameClickNum += (long)(GameData.GameClickCPS);
+                GameData.GameClickNum += GameData.GameClickCPS;
                 _cpsStopwatch.Stop();
                 _cpsStopwatch.Reset();
             }

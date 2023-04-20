@@ -5,7 +5,7 @@ internal static class GameData
     /// <summary>
     /// クリックされた回数
     /// </summary>
-    public static long GameClickNum { get; set; }
+    public static double GameClickNum { get; set; }
 
     /// <summary>
     /// 現在のCPS
