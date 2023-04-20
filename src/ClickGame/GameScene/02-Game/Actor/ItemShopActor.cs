@@ -10,14 +10,8 @@ internal class ItemShopActor : AppInfoActor
 {
     private readonly string[] _names = new string[]
     {
-        "Tester1",
+        "Clicker",
         "Tester2",
-    };
-
-    private readonly string[] _detail = new string[]
-    {
-        "TestDetail name: Tester1",
-        "TestDetail name: Tester2",
     };
 
     private readonly double[] _prices = new double[]
@@ -45,7 +39,7 @@ internal class ItemShopActor : AppInfoActor
         {
             for(int i = 0; i < _names.Length; i++)
             {
-                new ItemComponent(this, info, _names[i], _detail[i], _prices[i], _cpss[i], _icons[i] ?? TL.DummyIcon);
+                new ItemComponent(this, info, _names[i], _prices[i], _cpss[i], _icons[i] ?? TL.DummyIcon);
             }
         }
     }

@@ -14,17 +14,15 @@ internal class ItemComponent : AppInfoComponent
     private readonly FontRenderer _detailFont;
 
     public readonly string ItemName;
-    public readonly string ItemDetail;
     public readonly double ItemPrice;
     public readonly double ItemCps;
     public readonly Texture2D IconTexture;
     public readonly ImagePanel? Gui;
 
-    public ItemComponent(Actor owner, IReadOnlyAppInfo info, string itemName, string itemDetail, double itemPrice, double itemCps, Texture2D icon)
+    public ItemComponent(Actor owner, IReadOnlyAppInfo info, string itemName, double itemPrice, double itemCps, Texture2D icon)
         : base(owner, info)
     {
         ItemName = itemName;
-        ItemDetail = itemDetail;
         ItemPrice = itemPrice;
         ItemCps = itemCps;
         IconTexture = icon;
@@ -32,7 +30,7 @@ internal class ItemComponent : AppInfoComponent
         var nameFamily = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 20, Color.White);
         var detailFamily = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 15, Color.White);
         _nameFont = new(info.RenderPtr, nameFamily) { Text = itemName };
-        _detailFont = new(info.RenderPtr, detailFamily) { Text = itemDetail };
+        _detailFont = new(info.RenderPtr, detailFamily) { Text = $"{itemPrice} Click" };
 
         if (TL.ItemPanel != null)
         {
@@ -43,6 +41,20 @@ internal class ItemComponent : AppInfoComponent
             Gui.OnPaint += () =>
             {
                 icon.Render(iconPositionX, iconPositionY);
+
+                // 名前のレンダリング
+                _nameFont.Render().Rotation = -7.5;
+                _nameFont.GetTexture().Render(
+                    PixelHelper.GetPercent(Gui.Width, 30),
+                    PixelHelper.GetPercent(Gui.Height, 30)
+                );
+
+                // 値段のレンダリング
+                _detailFont.Render().Rotation = -7.5;
+                _detailFont.GetTexture().Render(
+                    PixelHelper.GetPercent(Gui.Width, 60),
+                    PixelHelper.GetPercent(Gui.Height, 17)
+                );
             };
             Gui.OnSeparate += () =>
             {
