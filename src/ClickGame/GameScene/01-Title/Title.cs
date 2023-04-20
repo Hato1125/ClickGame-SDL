@@ -15,13 +15,8 @@ internal class Title : Scene
     {
         TL.Load(info);
 
-        var logoPosition = new Vector2(
-            PixelHelper.GetCenter(1280, TL.Logo != null ? TL.Logo.Width : 0),
-            PixelHelper.GetPercent(720, 3)
-        );
-
         new TextureActor(this, info, TL.Background);
-        new TextureActor(this, info, TL.Logo, logoPosition);
+        new TitlePanelActor(this, info);
         new MenuActor(this, info);
 
         base.Init(info);
