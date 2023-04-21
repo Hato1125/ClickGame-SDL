@@ -31,7 +31,7 @@ internal class Game : App
     {
         SDL.SDL_SetHint(SDL.SDL_HINT_RENDER_SCALE_QUALITY, "2");
 
-        MaxFramerate = 60;
+        MaxFramerate = 45;
         OnInitialize += Init;
         OnMainLoop += Loop;
         OnFinish += Finish;

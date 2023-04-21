@@ -14,14 +14,44 @@ internal class ItemComponent : AppInfoComponent
     private readonly FontRenderer _nameFont;
     private readonly FontRenderer _detailFont;
 
-    public long ItemNumber { get; private set; }
-    public  long ItemPrice { get; private set; }
+    /// <summary>
+    /// アイテム名
+    /// </summary>
     public readonly string ItemName;
+
+    /// <summary>
+    /// アイテムのCPS
+    /// </summary>
     public readonly double ItemCps;
+
+    /// <summary>
+    /// アイテムのアイコンテクスチャ
+    /// </summary>
     public readonly Texture2D IconTexture;
+
+    /// <summary>
+    /// Gui
+    /// </summary>
     public readonly ImagePanel? Gui;
 
-    public ItemComponent(Actor owner, IReadOnlyAppInfo info, string itemName, long itemPrice, double itemCps, Texture2D icon, long itemNum = 0)
+    /// <summary>
+    /// アイテムの数
+    /// </summary>
+    public long ItemNumber { get; private set; }
+
+    /// <summary>
+    /// アイテムの値段
+    /// </summary>
+    public long ItemPrice { get; private set; }
+
+    public ItemComponent(
+        Actor owner,
+        IReadOnlyAppInfo info,
+        string itemName,
+        long itemPrice,
+        double itemCps,
+        Texture2D icon,
+        long itemNum = 0)
         : base(owner, info)
     {
         ItemNumber = itemNum;
@@ -30,10 +60,10 @@ internal class ItemComponent : AppInfoComponent
         ItemCps = itemCps;
         IconTexture = icon;
 
-        if(ItemNumber > 0)
+        if (ItemNumber > 0)
         {
             // 重みの個数分乗で値段が求められる
-            ItemNumber = (long)( ItemPrice *  Math.Pow(Weighted, itemNum));
+            ItemNumber = (long)(ItemPrice * Math.Pow(Weighted, itemNum));
         }
 
         var nameFamily = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 20, Color.FromArgb(143, 220, 4));
@@ -44,7 +74,7 @@ internal class ItemComponent : AppInfoComponent
         if (TL.ItemPanel != null)
         {
             Gui = new(info, TL.ItemPanel);
-            
+
             var iconPositionX = PixelHelper.GetPercent(Gui.Width, 5);
             var iconPositionY = PixelHelper.GetCenter(Gui.Height, icon.Height) - 3;
             Gui.OnPaint += () =>
@@ -67,7 +97,7 @@ internal class ItemComponent : AppInfoComponent
             };
             Gui.OnSeparate += () =>
             {
-                if(GameData.GameClickNum >= ItemPrice)
+                if (GameData.GameClickNum >= ItemPrice)
                 {
                     GameData.GameClickNum -= ItemPrice;
                     GameData.GameClickCPS += ItemCps;
