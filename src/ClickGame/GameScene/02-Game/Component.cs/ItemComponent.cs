@@ -10,25 +10,34 @@ namespace ClickGame.Scenes.Game;
 
 internal class ItemComponent : AppInfoComponent
 {
+    private readonly double Weighted = 1.25;
     private readonly FontRenderer _nameFont;
     private readonly FontRenderer _detailFont;
 
+    public long ItemNumber { get; private set; }
+    public  long ItemPrice { get; private set; }
     public readonly string ItemName;
-    public readonly double ItemPrice;
     public readonly double ItemCps;
     public readonly Texture2D IconTexture;
     public readonly ImagePanel? Gui;
 
-    public ItemComponent(Actor owner, IReadOnlyAppInfo info, string itemName, double itemPrice, double itemCps, Texture2D icon)
+    public ItemComponent(Actor owner, IReadOnlyAppInfo info, string itemName, long itemPrice, double itemCps, Texture2D icon, long itemNum = 0)
         : base(owner, info)
     {
+        ItemNumber = itemNum;
         ItemName = itemName;
         ItemPrice = itemPrice;
         ItemCps = itemCps;
         IconTexture = icon;
 
-        var nameFamily = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 20, Color.White);
-        var detailFamily = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 15, Color.White);
+        if(ItemNumber > 0)
+        {
+            // 重みの個数分乗で値段が求められる
+            ItemNumber = (long)( ItemPrice *  Math.Pow(Weighted, itemNum));
+        }
+
+        var nameFamily = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 20, Color.FromArgb(143, 220, 4));
+        var detailFamily = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 15, Color.FromArgb(143, 220, 4));
         _nameFont = new(info.RenderPtr, nameFamily) { Text = itemName };
         _detailFont = new(info.RenderPtr, detailFamily) { Text = $"{itemPrice} Click" };
 
@@ -62,6 +71,9 @@ internal class ItemComponent : AppInfoComponent
                 {
                     GameData.GameClickNum -= ItemPrice;
                     GameData.GameClickCPS += ItemCps;
+
+                    ItemPrice = (long)(ItemPrice * Weighted);
+                    _detailFont.Text = $"{ItemPrice}Click";
                 }
             };
         }

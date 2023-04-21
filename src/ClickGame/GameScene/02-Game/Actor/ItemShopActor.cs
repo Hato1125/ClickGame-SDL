@@ -11,19 +11,19 @@ internal class ItemShopActor : AppInfoActor
     private readonly string[] _names = new string[]
     {
         "Clicker",
-        "Tester2",
+        "TwinClicker",
     };
 
-    private readonly double[] _prices = new double[]
+    private readonly long[] _prices = new long[]
     {
         10,
-        20,
+        45,
     };
 
     private readonly double[] _cpss = new double[]
     {
         0.1,
-        0.2,
+        0.3,
     };
 
     private readonly Texture2D?[] _icons = new Texture2D?[]
@@ -38,9 +38,7 @@ internal class ItemShopActor : AppInfoActor
         if(TL.DummyIcon != null)
         {
             for(int i = 0; i < _names.Length; i++)
-            {
                 new ItemComponent(this, info, _names[i], _prices[i], _cpss[i], _icons[i] ?? TL.DummyIcon);
-            }
         }
     }
 
