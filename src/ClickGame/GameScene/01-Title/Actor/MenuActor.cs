@@ -32,7 +32,6 @@ internal class MenuActor : AppInfoActor
             tmpComponent.Gui.X = (int)PixelHelper.GetCenter(1280, tmpComponent.Gui.Width);
             tmpComponent.Gui.Y = (int)PixelHelper.GetPercent(720, 50) + tmpComponent.Gui.Height * i;
         }
-        tmpComponent = null;
     }
 
     protected override void ActorUpdate()
@@ -56,12 +55,8 @@ internal class MenuActor : AppInfoActor
 
                 // フェードアウト用のActorを追加
                 var fadeOut = new FadeOutActor(Owner, AppInfo);
-                fadeOut.OnFinish += () =>
-                {
-                    SceneManager.SetScene("Game");
-                };
+                fadeOut.OnFinish += () => SceneManager.SetScene("Game");
             }
-
         }
     }
 

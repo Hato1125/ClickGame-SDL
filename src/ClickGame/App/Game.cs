@@ -41,9 +41,9 @@ internal class Game : App
     {
         _debug.Init(info);
 
-        SceneManager.RegistScene("Test", new ClickGame.Scenes.Test.Test(), false);
-        SceneManager.RegistScene("Title", new ClickGame.Scenes.Title.Title(), false);
-        SceneManager.RegistScene("Game", new ClickGame.Scenes.Game.Game(), false);
+        SceneManager.RegistScene("Test", new Scenes.Test.Test(), false);
+        SceneManager.RegistScene("Title", new Scenes.Title.Title(), false);
+        SceneManager.RegistScene("Game", new Scenes.Game.Game(), false);
 
         SceneManager.SetScene("Title");
     }

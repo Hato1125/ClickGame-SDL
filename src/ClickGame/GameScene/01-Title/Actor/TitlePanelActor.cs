@@ -33,15 +33,15 @@ internal class TitlePanelActor : AppInfoActor
         215, 215, 215, 215, 215, 235, 255,
     };
     private Vector2[]? _panelPosition;
-    private readonly ClickGame.Common.TextureComponent[]? _titlePanels;
-    private readonly ClickGame.Common.TextureComponent[]? _titleGrows;
+    private readonly Common.TextureComponent[]? _titlePanels;
+    private readonly Common.TextureComponent[]? _titleGrows;
 
     public TitlePanelActor(Scene owner, IReadOnlyAppInfo info)
         : base(owner, info)
     {
         if (TL.TitlePanel_0 != null && TL.TitlePanel_1 != null)
         {
-            _titlePanels = new ClickGame.Common.TextureComponent[]
+            _titlePanels = new Common.TextureComponent[]
             {
                 new(this, info, TL.TitlePanel_0),
                 new(this, info, TL.TitlePanel_1),
@@ -60,7 +60,7 @@ internal class TitlePanelActor : AppInfoActor
 
         if (TL.TitlePanelGrow_0 != null && TL.TitlePanelGrow_1 != null)
         {
-            _titleGrows = new ClickGame.Common.TextureComponent[]
+            _titleGrows = new Common.TextureComponent[]
             {
                 new(this, info, TL.TitlePanelGrow_0),
                 new(this, info, TL.TitlePanelGrow_1),
@@ -81,14 +81,8 @@ internal class TitlePanelActor : AppInfoActor
                 if (_panelPosition != null)
                     _titleGrows[i].Position = _panelPosition[i];
 
-                int counter = 0;
-                if(i == 0)
-                    counter = _flashCounter;
-                else
-                    counter = (_flashOpacity.Length - 1) - _flashCounter;
-
                 _titleGrows[i].Texture.Rotation = _rotation;
-                _titleGrows[i].Texture.AlphaMod = _flashOpacity[counter];
+                _titleGrows[i].Texture.AlphaMod = _flashOpacity[_flashCounter];
             }
         }
 

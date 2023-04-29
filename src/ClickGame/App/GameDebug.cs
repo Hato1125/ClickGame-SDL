@@ -28,10 +28,10 @@ internal class GameDebug
 
         for (int i = 0; i < _debugText.Length; i++)
         {
-            string debugValue = i switch
+            var debugValue = i switch
             {
                 0 => SceneManager.SceneActorNumber.ToString(),
-                1 => $"{Program.Game.Framerate.ToString()}fps",
+                1 => $"{Program.Game.Framerate}fps",
                 _ => string.Empty,
             };
 

@@ -2,7 +2,6 @@ using System.Numerics;
 using SDLib;
 using SDLib.Framework;
 using SDLib.Resource;
-using ClickGame.Helper;
 using ClickGame.Common;
 
 namespace ClickGame.Scenes.Title;
