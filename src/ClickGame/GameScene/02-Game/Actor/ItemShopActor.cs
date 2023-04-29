@@ -12,46 +12,58 @@ internal class ItemShopActor : AppInfoActor
     {
         "Clicker",
         "TwinClicker",
+        "Plant",
+        "Mine",
+        "Bank"
     };
 
     private readonly long[] _prices = new long[]
     {
         10,
-        45,
+        65,
+        500,
+        2000,
+        10000,
     };
 
     private readonly double[] _cpss = new double[]
     {
         0.1,
-        0.3,
+        1.0,
+        4.5,
+        10.0,
+        100.0,
     };
 
     private readonly Texture2D?[] _icons = new Texture2D?[]
     {
         TL.ClickerIcon,
         TL.DummyIcon,
+        TL.DummyIcon,
+        TL.DummyIcon,
+        TL.DummyIcon,
     };
 
     public ItemShopActor(Scene owner, IReadOnlyAppInfo info)
         : base(owner, info)
     {
-        if(TL.DummyIcon != null)
+        if (TL.DummyIcon != null)
         {
-            for(int i = 0; i < _names.Length; i++)
+            for (int i = 0; i < _names.Length; i++)
                 new ItemComponent(this, info, _names[i], _prices[i], _cpss[i], _icons[i] ?? TL.DummyIcon);
         }
     }
 
     protected override void ActorUpdate()
     {
-        for(int i = 0; i < ComponentList.Count; i++)
+        for (int i = 0; i < ComponentList.Count; i++)
         {
-            if(!(ComponentList[i] is ItemComponent))
+            if (!(ComponentList[i] is ItemComponent))
                 continue;
 
             var item = (ItemComponent)ComponentList[i];
 
-            if(item.Gui != null)
+            if (item.Gui != null)
             {
                 item.Gui.X = (int)PixelHelper.GetPercent(GameInfo.FirstWindowWidth, 60);
                 item.Gui.Y = (int)PixelHelper.GetPercent(GameInfo.FirstWindowHeight, 10) + i * (item.Gui.Height + 10);

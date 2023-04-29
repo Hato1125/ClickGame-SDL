@@ -16,6 +16,7 @@ internal class Game : Scene
         new TextureActor(this, info, TL.Background);
         new ClickPanelActor(this, info);
         new ClickNumActor(this, info);
+        new ClickCPSActor(this, info);
         new ItemShopActor(this, info);
 
         base.Init(info);

@@ -66,8 +66,8 @@ internal class ItemComponent : AppInfoComponent
             ItemNumber = (long)(ItemPrice * Math.Pow(Weighted, itemNum));
         }
 
-        var nameFamily = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 20, Color.FromArgb(143, 220, 4));
-        var detailFamily = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 15, Color.FromArgb(143, 220, 4));
+        var nameFamily = new FontFamily($"{GameInfo.FontsAsset}OPTISantita.otf", 20, Color.FromArgb(143, 220, 4));
+        var detailFamily = new FontFamily($"{GameInfo.FontsAsset}OPTISantita.otf", 15, Color.FromArgb(143, 220, 4));
         _nameFont = new(info.RenderPtr, nameFamily) { Text = itemName };
         _detailFont = new(info.RenderPtr, detailFamily) { Text = $"{itemPrice} Click" };
 

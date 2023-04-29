@@ -9,7 +9,7 @@ namespace ClickGame.Scenes.Game;
 
 internal class ClickNumActor : AppInfoActor
 {
-    private readonly string fontName = $"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf";
+    private readonly string fontName = $"{GameInfo.FontsAsset}OPTISantita.otf";
     private readonly int fontSize = 70;
 
     public ClickNumActor(Scene owner, IReadOnlyAppInfo info)
