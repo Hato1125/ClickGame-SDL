@@ -22,16 +22,6 @@ internal class Title : Scene
         base.Init(info);
     }
 
-    public override void Update(IReadOnlyAppInfo info)
-    {
-        base.Update(info);
-    }
-
-    public override void Render(IReadOnlyAppInfo info)
-    {
-        base.Render(info);
-    }
-
     public override void Finish()
     {
         TextureManager.DeleteAllTexture();

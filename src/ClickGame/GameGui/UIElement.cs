@@ -93,7 +93,7 @@ internal class UIElement : IDisposable
     /// <summary>
     /// キーコードリスト
     /// </summary>
-    public readonly List<SDL.SDL_Scancode> KeyCode = new();
+    public readonly List<SDL.SDL_Scancode> KeyCode = new(255);
 
     /// <summary>
     /// 子要素リスト
@@ -141,6 +141,7 @@ internal class UIElement : IDisposable
             TextureArea?.Dispose();
             TextureArea = new(Info.RenderPtr, Width, Height);
 
+            _isFastCreate = false;
             _bufferWidth = Width;
             _bufferHeight = Height;
         }
@@ -218,9 +219,12 @@ internal class UIElement : IDisposable
         if (Mouse.IsPushing(SDL.SDL_BUTTON_LEFT))
             return true;
 
-        foreach (var key in KeyCode)
-            if (Keyboard.IsPushing(key))
-                return true;
+        if (KeyCode.Any())
+        {
+            foreach (var key in KeyCode)
+                if (Keyboard.IsPushing(key))
+                    return true;
+        }
 
         return false;
     }
@@ -236,9 +240,12 @@ internal class UIElement : IDisposable
         if (Mouse.IsPushed(SDL.SDL_BUTTON_LEFT))
             return true;
 
-        foreach (var key in KeyCode)
-            if (Keyboard.IsPushed(key))
-                return true;
+        if (KeyCode.Any())
+        {
+            foreach (var key in KeyCode)
+                if (Keyboard.IsPushed(key))
+                    return true;
+        }
 
         return false;
     }
@@ -254,9 +261,12 @@ internal class UIElement : IDisposable
         if (Mouse.IsSeparate(SDL.SDL_BUTTON_LEFT))
             return true;
 
-        foreach (var key in KeyCode)
-            if (Keyboard.IsSeparate(key))
-                return true;
+        if (KeyCode.Any())
+        {
+            foreach (var key in KeyCode)
+                if (Keyboard.IsSeparate(key))
+                    return true;
+        }
 
         return false;
     }

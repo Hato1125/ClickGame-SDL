@@ -7,7 +7,7 @@ namespace ClickGame.Scenes.Title;
 
 internal class RectangleComponent : Component
 {
-    private IReadOnlyAppInfo _info;
+    private readonly IReadOnlyAppInfo _info;
 
     public int X { get; set; }
     public int Y { get; set; }
