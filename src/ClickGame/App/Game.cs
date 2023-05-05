@@ -11,6 +11,8 @@ internal class Game : App
 {
     private readonly GameDebug _debug = new();
 
+    public static readonly GameSetting Setting = new($"{AppContext.BaseDirectory}Setting.json");
+
     public Game(
         string windowTitle,
         SDL.SDL_WindowFlags windowFlags,

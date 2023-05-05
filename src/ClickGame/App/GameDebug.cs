@@ -17,7 +17,7 @@ internal class GameDebug
 
     public void Init(IReadOnlyAppInfo info)
     {
-        var family = new FontFamily($"{GameInfo.FontsAsset}07やさしさゴシックボールド.ttf", 20, Color.White);
+        var family = new FontFamily($"{AppContext.BaseDirectory}{ClickGame.Game.Setting.Setting.FontDirectry}\\{ClickGame.Game.Setting.Setting.FontName}", 20, Color.White);
         _debugFont = new(info.RenderPtr, family);
     }
 

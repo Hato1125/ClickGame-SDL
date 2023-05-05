@@ -8,7 +8,7 @@ namespace ClickGame.Scenes.Game;
 
 internal class ClickCPSActor : AppInfoActor
 {
-    private readonly string fontName = $"{GameInfo.FontsAsset}OPTISantita.otf";
+    private readonly string fontName = $"{AppContext.BaseDirectory}{ClickGame.Game.Setting.Setting.FontDirectry}\\{ClickGame.Game.Setting.Setting.FontName}";
     private readonly int fontSize = 25;
 
     public ClickCPSActor(Scene owner, IReadOnlyAppInfo info)
